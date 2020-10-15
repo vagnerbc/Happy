@@ -8,6 +8,9 @@
 #upaloads
 /uploads
 
+#database
+*.sqlite
+
 # testing
 /coverage
 
