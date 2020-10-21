@@ -3,6 +3,7 @@ import { getRepository } from "typeorm";
 import bcrypt from "bcrypt";
 import * as Yup from "yup";
 
+import { generateToken } from "../utils/jwt";
 import UserView from "../views/users_view";
 import User from "../models/User";
 
@@ -12,7 +13,7 @@ export default {
 
     const users = await repository.find();
 
-    res.status(200).send(UserView.renderMany(users));
+    res.status(200).json(UserView.renderMany(users));
   },
 
   async create(req: Request, res: Response) {
@@ -54,6 +55,9 @@ export default {
 
     repository.save(user);
 
-    return res.status(201).json(user);
+    return res.status(201).json({
+      user,
+      token: generateToken({ id: user.id }),
+    });
   },
 };
