@@ -9,7 +9,6 @@ import mapMarkerImg from "../images/map-marker.svg";
 
 import "../styles/pages/orphanages-map.css";
 import mapIcon from "../utils/mapIcon";
-import { stringify } from "querystring";
 
 interface Orphanage {
   id: number;

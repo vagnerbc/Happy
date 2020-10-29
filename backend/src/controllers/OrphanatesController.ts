@@ -14,7 +14,7 @@ export default {
       relations: ["images"],
     });
 
-    return res.json(OrphanageView.render(orphanage));
+    return res.send(OrphanageView.render(orphanage));
   },
 
   async index(req: Request, res: Response) {
@@ -24,7 +24,7 @@ export default {
       relations: ["images"],
     });
 
-    return res.json(OrphanageView.renderMany(orphanages));
+    return res.send(OrphanageView.renderMany(orphanages));
   },
 
   async create(req: Request, res: Response) {
@@ -79,6 +79,6 @@ export default {
 
     await repository.save(orphanage);
 
-    return res.status(201).json(orphanage);
+    return res.status(201).send(orphanage);
   },
 };

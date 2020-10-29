@@ -13,7 +13,7 @@ export default {
 
     const users = await repository.find();
 
-    res.status(200).json(UserView.renderMany(users));
+    res.status(200).send(UserView.renderMany(users));
   },
 
   async create(req: Request, res: Response) {
@@ -41,7 +41,7 @@ export default {
     const userCreated = await repository.findOne({ email });
 
     if (userCreated)
-      return res.status(400).json({ error: "User already exists." });
+      return res.status(400).send({ error: "User already exists." });
 
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
@@ -55,7 +55,7 @@ export default {
 
     repository.save(user);
 
-    return res.status(201).json({
+    return res.status(201).send({
       user,
       token: generateToken({ id: user.id }),
     });

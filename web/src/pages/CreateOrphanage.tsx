@@ -8,7 +8,6 @@ import "../styles/pages/create-orphanage.css";
 
 import mapIcon from "../utils/mapIcon";
 import Sidebar from "../components/Sidebar";
-import { trace } from "console";
 import api from "../services/api";
 
 export default function CreateOrphanage() {

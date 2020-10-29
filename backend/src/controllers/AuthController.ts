@@ -12,19 +12,29 @@ export default {
   async authenticate(req: Request, res: Response) {
     const { email, password } = req.body;
 
-    const repository = getRepository(User);
+    try {
+      const repository = getRepository(User);
 
-    const user = await repository.findOne({ email });
+      const user = await repository.findOne({ email });
 
-    if (!user) return res.status(404).json({ error: "User not found." });
+      if (!user) return res.status(404).json({ error: "E-mail not found." });
 
-    const isValid = await bcrypt.compare(password, user.password);
+      const isValid = await bcrypt.compare(password, user.password);
 
-    if (!isValid) return res.status(401).json({ error: "Invalid password." });
+      if (!isValid) return res.status(401).json({ error: "Invalid password." });
 
-    return res
-      .status(200)
-      .send({ user, token: generateToken({ id: user.id }) });
+      const data = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      };
+
+      return res
+        .status(200)
+        .send({ user: data, token: generateToken({ id: user.id }) });
+    } catch (error) {
+      return res.status(400).send({ error: "Error on login." });
+    }
   },
 
   async forgotPassword(req: Request, res: Response) {
@@ -35,7 +45,7 @@ export default {
 
       const user = await repository.findOne({ email });
 
-      if (!user) return res.status(404).json({ error: "User not found." });
+      if (!user) return res.status(404).json({ error: "E-mail not found." });
 
       const token = crypto.randomBytes(20).toString("hex");
 
@@ -53,12 +63,47 @@ export default {
         to: email,
         from: "vagner@email.com",
         subject: "Forgot Password",
-        html: "../resources/mail/auth/forgotPasswordTemplate.html",
+        html: `<p>Você esqueceu sua senha ? Não tem problema, utilize esse token ${token}`,
       });
 
       return res.send();
     } catch (error) {
-      res.status(400).send({ error: "Error on forgot password, try again" });
+      return res
+        .status(400)
+        .send({ error: "Error on forgot password, try again" });
+    }
+  },
+
+  async resetPassword(req: Request, res: Response) {
+    const { email, token, password } = req.body;
+
+    try {
+      const repository = getRepository(User);
+
+      const user = await repository.findOne({
+        email,
+      });
+
+      if (!user) return res.status(400).send({ error: "Email not found." });
+
+      if (
+        user.password_reset_expires < new Date() ||
+        user.password_reset_token !== token
+      )
+        return res
+          .status(400)
+          .send({ error: "Token expired to reset password." });
+
+      await getConnection()
+        .createQueryBuilder()
+        .update(User)
+        .set({ password })
+        .where("id = :id", { id: user.id })
+        .execute();
+
+      return res.send();
+    } catch (error) {
+      return res.status(400).send({ error: "Error on reset password." });
     }
   },
 };
