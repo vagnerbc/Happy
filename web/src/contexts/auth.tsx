@@ -61,6 +61,10 @@ export const AuthProvider: React.FC = ({ children }) => {
   );
 };
 
+export const isAuthenticated = () => {
+  return !!localStorage.getItem("@HAPPY:AUTH_TOKEN");
+};
+
 export function useAuth() {
   const context = useContext(AuthContext);
 

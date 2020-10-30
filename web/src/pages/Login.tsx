@@ -1,6 +1,8 @@
 import React, { FormEvent, useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { Link, useHistory } from "react-router-dom";
+import AsideLogin from "../components/AsideLogin";
+
 import { useAuth } from "../contexts/auth";
 
 import "../styles/pages/Login.css";
@@ -12,7 +14,7 @@ function Login() {
 
   const history = useHistory();
 
-  const { signed, signIn } = useAuth();
+  const { signIn } = useAuth();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -28,12 +30,7 @@ function Login() {
 
   return (
     <div id="page-login">
-      <div className="left-content">
-        <img src="" alt="Logo" />
-
-        <span>Faxinal</span>
-        <span>Paraná</span>
-      </div>
+      <AsideLogin />
 
       <div className="right-content">
         <Link to="">

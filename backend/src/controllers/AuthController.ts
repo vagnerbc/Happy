@@ -94,10 +94,13 @@ export default {
           .status(400)
           .send({ error: "Token expired to reset password." });
 
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(password, salt);
+
       await getConnection()
         .createQueryBuilder()
         .update(User)
-        .set({ password })
+        .set({ password: hash })
         .where("id = :id", { id: user.id })
         .execute();
 

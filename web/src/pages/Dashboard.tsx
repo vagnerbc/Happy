@@ -1,7 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/auth";
-import Login from "./Login";
 
 function Dashboard() {
   const { signOut } = useAuth();
