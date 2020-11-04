@@ -3,6 +3,7 @@ import multer from "multer";
 
 import uploadConfig from "./config/upload";
 import AuthController from "./controllers/AuthController";
+import DashboardController from "./controllers/DashboardController";
 import OrphanagesController from "./controllers/OrphanatesController";
 import UsersController from "./controllers/UsersController";
 
@@ -23,10 +24,21 @@ router.get("/orphanages", OrphanagesController.index);
 router.get("/orphanages/:id", OrphanagesController.show);
 router.post("/orphanages", upload.array("images"), OrphanagesController.create);
 
-router.post("/users", UsersController.create);
-
 router.use(AuthMiddleware);
 
+router.post("/users", UsersController.create);
 router.get("/users", UsersController.index);
+
+router.get("/dashboard/pending", DashboardController.findPendingOrphanages);
+router.get("/dashboard/approved", DashboardController.findApprovedOrphanages);
+
+router.put("/orphanages/approve/:id", OrphanagesController.approve);
+router.put("/orphanages/reject/:id", OrphanagesController.reject);
+router.put(
+  "/orphanages/:id",
+  upload.array("images"),
+  OrphanagesController.update
+);
+router.delete("/orphanages/delete/:id", OrphanagesController.delete);
 
 export default router;

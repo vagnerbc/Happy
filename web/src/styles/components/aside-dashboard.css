@@ -1,0 +1,57 @@
+#aside-dashboard {
+  position: fixed;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 100vh;
+  width: 100px;
+  padding: 32px 0;
+
+  background: #15c3d6;
+}
+
+#aside-dashboard img {
+  width: 48px;
+  height: 56px;
+}
+
+#aside-dashboard button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 48px;
+  height: 48px;
+
+  background: #12afcb;
+  color: #fff;
+  border-radius: 16px;
+
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  transition: background-color 0.2s;
+}
+
+#aside-dashboard button.active {
+  background: #ffd666;
+  color: #0089a5;
+  pointer-events: none;
+}
+
+#aside-dashboard button:hover {
+  background: #17d6eb;
+}
+
+#aside-dashboard .status-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 120px;
+}

@@ -31,7 +31,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     if (storageUser && storageToken) {
       setUser(JSON.parse(storageUser));
-      api.defaults.headers["Authorization"] = `Bearer ${storageToken}`;
+      // api.defaults.headers["Authorization"] = `Bearer ${storageToken}`;
       setLoading(false);
     }
   }, []);
@@ -41,7 +41,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     setUser(data.user);
 
-    api.defaults.headers["Authorization"] = `Bearer ${data.token}`;
+    // api.defaults.headers["Authorization"] = `Bearer ${data.token}`;
 
     localStorage.setItem("@HAPPY:USER", JSON.stringify(data.user));
     localStorage.setItem("@HAPPY:AUTH_TOKEN", data.token);

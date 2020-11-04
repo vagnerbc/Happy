@@ -1,0 +1,86 @@
+#delete-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+
+  background: #ff669d;
+  color: #fff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#delete-modal .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex: 1;
+}
+
+#delete-modal .content .left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-right: 200px;
+}
+
+#delete-modal .content .right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#delete-modal .content .left h2 {
+  font-weight: 800;
+  font-size: 80px;
+  line-height: 80px;
+
+  margin-bottom: 32px;
+  color: #ffffff;
+}
+
+#delete-modal .content .left span {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 34px;
+
+  color: #ffffff;
+  margin-bottom: 64px;
+}
+
+#delete-modal .content .left .button-content {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#delete-modal .content .left .button-content > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 200px;
+  height: 60px;
+
+  color: #fff;
+  background: #d6487b;
+  border-radius: 20px;
+
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  transition: background-color 0.2s;
+}
+
+#delete-modal .content .left .button-content > button:hover {
+  background: #d42968;
+}

@@ -1,4 +1,4 @@
-import { Column, MigrationInterface, QueryRunner, TableColumn } from "typeorm";
+import { MigrationInterface, QueryRunner, TableColumn } from "typeorm";
 
 export class createTokenColumnsOnUsers1603331632973
   implements MigrationInterface {

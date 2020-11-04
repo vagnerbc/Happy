@@ -4,6 +4,7 @@ import { FiPlus, FiArrowRight } from "react-icons/fi";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 
 import api from "../services/api";
+import useLocation from "../hooks/useLocation";
 
 import mapMarkerImg from "../images/map-marker.svg";
 
@@ -19,6 +20,8 @@ interface Orphanage {
 
 function OrphanagesMap() {
   const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
+
+  const { latitude, longitude } = useLocation();
 
   useEffect(() => {
     const getOrphanages = async () => {
@@ -46,7 +49,7 @@ function OrphanagesMap() {
       </aside>
 
       <Map
-        center={[-27.2092052, -49.6401092]}
+        center={[latitude, longitude]}
         zoom={15}
         style={{ width: "100%", height: "100%" }}
       >

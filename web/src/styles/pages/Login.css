@@ -89,6 +89,14 @@
   border-color: #ff669d;
 }
 
+#page-login form .error {
+  display: flex;
+  justify-content: flex-end;
+
+  padding: 10px 0;
+  color: #ff669d;
+}
+
 #page-login .options {
   padding: 8px 0 20px 0;
 

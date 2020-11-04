@@ -51,6 +51,10 @@ function Routes() {
         <Route path="/orphanages/:id" component={Orphanage} />
 
         <PrivateRoute path="/dashboard" component={Dashboard} />
+        <PrivateRoute
+          path="/orphanages-update/:id"
+          component={CreateOrphanage}
+        />
       </Switch>
     </BrowserRouter>
   );

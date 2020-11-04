@@ -1,0 +1,21 @@
+#empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  flex: 1;
+}
+
+#empty > img {
+  padding: 10px;
+}
+
+#empty span {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 34px;
+
+  text-align: center;
+  color: #8fa7b3;
+}
