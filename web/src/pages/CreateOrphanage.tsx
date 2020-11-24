@@ -2,7 +2,7 @@ import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Map, Marker, TileLayer } from "react-leaflet";
 import { LeafletMouseEvent } from "leaflet";
-import { FiPlus } from "react-icons/fi";
+import { FiX, FiPlus } from "react-icons/fi";
 
 import useLocation from "../hooks/useLocation";
 import api from "../services/api";
@@ -38,9 +38,15 @@ export default function CreateOrphanage() {
       setInstructions(data.instructions);
       setOpeningHours(data.opening_hours);
       setOpenOnWeekends(data.open_on_weekends);
-      setImages(
-        data.images.map((image: { id: string; url: string }) => image.url)
+
+      const imagesFiles: File[] = await Promise.all(
+        data.images.map(async (image: { id: string; url: string }) => {
+          const response = await fetch(image.url);
+          return await response.blob();
+        })
       );
+
+      setImages(imagesFiles);
       setPreviewImages(
         data.images.map((image: { id: string; url: string }) => image.url)
       );
@@ -63,13 +69,13 @@ export default function CreateOrphanage() {
 
     const selectedImages = Array.from(event.target.files);
 
-    setImages(selectedImages);
+    setImages([...images].concat(selectedImages));
 
     const selectedImagesPreview = selectedImages.map((image) => {
       return URL.createObjectURL(image);
     });
 
-    setPreviewImages(selectedImagesPreview);
+    setPreviewImages([...previewImages].concat(selectedImagesPreview));
   };
 
   const handleSubmit = async (event: FormEvent) => {
@@ -78,6 +84,7 @@ export default function CreateOrphanage() {
     const { latitude, longitude } = position;
 
     const data = new FormData();
+    data.append("id", id);
     data.append("name", name);
     data.append("latitude", String(latitude));
     data.append("longitude", String(longitude));
@@ -90,11 +97,25 @@ export default function CreateOrphanage() {
       data.append("images", image);
     });
 
-    await api.post("orphanages", data);
+    if (!id) {
+      await api.post("orphanages", data);
+    } else {
+      await api.put(`orphanages/${id}`, data);
+    }
 
     alert("Cadastro realizado com sucesso!");
 
     history.push("/app");
+  };
+
+  const handleRemoveImage = (index: number) => {
+    const imageCopy = [...images];
+    imageCopy.splice(index, 1);
+    setImages(imageCopy);
+
+    const previewCopy = [...previewImages];
+    previewCopy.splice(index, 1);
+    setPreviewImages(previewCopy);
   };
 
   return (
@@ -150,8 +171,19 @@ export default function CreateOrphanage() {
               <label htmlFor="images">Fotos</label>
 
               <div className="images-container">
-                {previewImages.map((image) => {
-                  return <img key={image} src={image} alt={name} />;
+                {previewImages.map((image, index) => {
+                  return (
+                    <div className="img-content" key={image}>
+                      <button
+                        type="button"
+                        className="remove"
+                        onClick={() => handleRemoveImage(index)}
+                      >
+                        <FiX width="24" height="24" />
+                      </button>
+                      <img src={image} alt={name} />;
+                    </div>
+                  );
                 })}
 
                 <label className="new-image" htmlFor="image[]">

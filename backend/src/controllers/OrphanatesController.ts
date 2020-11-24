@@ -4,6 +4,7 @@ import * as Yup from "yup";
 
 import Orphanage from "../models/Orphanage";
 import OrphanageView from "../views/orphanages_view";
+import ImageService from "../services/ImageService";
 
 export default {
   async show(req: Request, res: Response) {
@@ -132,6 +133,8 @@ export default {
     try {
       const repository = getRepository(Orphanage);
 
+      await ImageService.deleteByOrphanageID(parseInt(id));
+
       await repository.delete(id);
 
       return res.status(200).send();
@@ -154,12 +157,19 @@ export default {
       open_on_weekends,
     } = req.body;
 
+    const repository = getRepository(Orphanage);
+
+    const orphanage = await repository.findOne(id);
+
+    if (!orphanage)
+      return res.status(404).send({ message: "Orphanage not found" });
+
+    await ImageService.delete(orphanage);
+
     const reqImages = req.files as Express.Multer.File[];
     const images = reqImages.map((image) => {
       return { path: image.filename };
     });
-
-    const repository = getRepository(Orphanage);
 
     const data = {
       id: parseInt(id),

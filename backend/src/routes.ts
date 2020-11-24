@@ -24,9 +24,10 @@ router.get("/orphanages", OrphanagesController.index);
 router.get("/orphanages/:id", OrphanagesController.show);
 router.post("/orphanages", upload.array("images"), OrphanagesController.create);
 
+router.post("/users", UsersController.create);
+
 router.use(AuthMiddleware);
 
-router.post("/users", UsersController.create);
 router.get("/users", UsersController.index);
 
 router.get("/dashboard/pending", DashboardController.findPendingOrphanages);
