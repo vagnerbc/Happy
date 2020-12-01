@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+// import api from "../services/api";
 
 function useLocation() {
   const [latitude, setLatitude] = useState(-1);
@@ -30,6 +31,19 @@ function useLocation() {
       );
     }
   }, []);
+
+  // useEffect(() => {
+  //   if (!latitude || !longitude) return;
+
+  //   async function getCity() {
+  //     const response = await api.get(
+  //       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.REACT_APP_GOOGLE_KEY}`
+  //     );
+  //     console.log({ response });
+  //   }
+
+  //   getCity();
+  // }, [latitude, longitude]);
 
   return { latitude, longitude, setLatitude, setLongitude };
 }

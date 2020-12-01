@@ -1,0 +1,89 @@
+#create-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+
+  background: #37c77f;
+  color: #fff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#create-modal .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex: 1;
+}
+
+#create-modal .content .left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0 50px;
+}
+
+#create-modal .content .right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0 50px;
+}
+
+#create-modal .content .left h2 {
+  font-weight: 800;
+  font-size: 80px;
+  line-height: 80px;
+
+  margin-bottom: 32px;
+  color: #ffffff;
+}
+
+#create-modal .content .left span {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 34px;
+
+  color: #ffffff;
+  margin-bottom: 64px;
+  text-align: center;
+}
+
+#create-modal .content .left .button-content {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#create-modal .content .left .button-content > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 200px;
+  height: 60px;
+
+  color: #fff;
+  background: #31b272;
+  border-radius: 20px;
+
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  transition: background-color 0.2s;
+}
+
+#create-modal .content .left .button-content > button:hover {
+  background: #28d880;
+}

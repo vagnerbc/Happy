@@ -106,28 +106,6 @@ export default {
     }
   },
 
-  async reject(req: Request, res: Response) {
-    const { id } = req.params;
-    try {
-      const repository = getRepository(Orphanage);
-
-      const orphanage = await repository.findOne(id);
-
-      if (!orphanage)
-        return res.status(401).send({ message: "Orphanage does not exist!" });
-
-      orphanage.approved = true;
-
-      repository.save(orphanage);
-
-      return res.status(200);
-    } catch (error) {
-      return res
-        .status(401)
-        .send({ message: "Error on approve this orphanage" });
-    }
-  },
-
   async delete(req: Request, res: Response) {
     const { id } = req.params as { id: string };
     try {

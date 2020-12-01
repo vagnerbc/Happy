@@ -34,7 +34,7 @@ router.get("/dashboard/pending", DashboardController.findPendingOrphanages);
 router.get("/dashboard/approved", DashboardController.findApprovedOrphanages);
 
 router.put("/orphanages/approve/:id", OrphanagesController.approve);
-router.put("/orphanages/reject/:id", OrphanagesController.reject);
+router.put("/orphanages/reject/:id", OrphanagesController.delete);
 router.put(
   "/orphanages/:id",
   upload.array("images"),

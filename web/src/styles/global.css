@@ -17,3 +17,8 @@ button,
 textarea {
   font: 600 18px Nunito, sans-serif;
 }
+
+button {
+  outline: none;
+  border: none;
+}

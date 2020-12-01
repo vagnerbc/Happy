@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Map, Marker, TileLayer } from "react-leaflet";
 import { LeafletMouseEvent } from "leaflet";
 import { FiX, FiPlus } from "react-icons/fi";
@@ -9,13 +9,14 @@ import api from "../services/api";
 
 import mapIcon from "../utils/mapIcon";
 import Sidebar from "../components/Sidebar";
+import CreateModal from "../components/CreateModal";
 
 import "../styles/pages/create-orphanage.css";
 
 export default function CreateOrphanage() {
-  const history = useHistory();
   const { id } = useParams() as { id: string };
 
+  const [created, setCreated] = useState(false);
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
@@ -103,9 +104,7 @@ export default function CreateOrphanage() {
       await api.put(`orphanages/${id}`, data);
     }
 
-    alert("Cadastro realizado com sucesso!");
-
-    history.push("/app");
+    setCreated(true);
   };
 
   const handleRemoveImage = (index: number) => {
@@ -118,7 +117,9 @@ export default function CreateOrphanage() {
     setPreviewImages(previewCopy);
   };
 
-  return (
+  return created ? (
+    <CreateModal name={name} />
+  ) : (
     <div id="page-create-orphanage">
       <Sidebar />
 
